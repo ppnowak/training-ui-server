@@ -183,3 +183,8 @@ tbody tr:last-child td {
 tbody th {
     background-color: #8eabc8;
 }
+
+#uptime {
+    position: absolute;
+    bottom: 0px;
+}
