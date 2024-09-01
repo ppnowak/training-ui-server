@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/inputs.css">
+    <link rel="stylesheet" href="/css/shop.css">
+    <title><%= title %></title>
+</head>
+<body>
+    <% if (headless) { %>
+        <%- body %>
+    <% } else { %>
+        <div class="container">
+            <div class="sidebar">
+                <h3>Contents:</h3>
+                <ul>
+                    <% pages.forEach(page => { %>
+                        <li><a href="<%= page.url %>" class="<%= page.url === activePage ? 'active' : '' %>"><%= page.name %></a></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="content">
+                <%- body %>
+            </div>
+        </div>
+    <% } %>
+</body>
+</html>

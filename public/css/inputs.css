@@ -1,0 +1,110 @@
+#form {
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group, .form-check, .error {
+    margin-bottom: 30px;
+    border: 1px solid #8eabc8;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.error {
+    border: 1px solid #ec0404;
+    background: #f98b8b;
+}
+
+.form-group label, .form-check label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"], 
+input[type="password"], 
+select, 
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+table input {
+    width: auto !important;
+}
+
+.form-group a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.form-group a:hover {
+    text-decoration: underline;
+}
+
+.form-group img {
+    max-width: 300px;
+    height: auto;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-check input[type="checkbox"],
+.form-check input[type="radio"] {
+    margin-right: 10px;
+}
+
+.form-check label {
+    margin-bottom: 0;
+}
+
+#hiddenElement {
+    display: none;
+}
+
+button {
+    background-color: #8eabc8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    height: 36px;
+}
+
+button:hover {
+    background-color: #004992;
+}
+
+button:active {
+    background-color: #0066cc;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

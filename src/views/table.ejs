@@ -1,0 +1,73 @@
+    <h2>Browser Market Share (top 5)</h2>
+    <table class="table" id="browserTable">
+      <thead>
+        <tr>
+          <th scope="col" onclick="sortTable(0)"># <span id="indicator-0"></span></th>
+          <th scope="col" onclick="sortTable(1)">Browser <span id="indicator-1"></span></th>
+          <th scope="col" onclick="sortTable(2)">Share <span id="indicator-2"></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <th scope="row" colspan="3">Loading...</th>
+        </tr>
+      </tbody>
+    </table>
+
+<script>
+    let currentSortColumn = null;
+    let sortOrder = 'asc'; // 'asc' for ascending, 'desc' for descending
+
+    function sortTable(columnIndex) {
+        const table = document.getElementById('browserTable');
+        const tbody = table.tBodies[0];
+        const rows = Array.from(tbody.rows);
+        const isNumeric = columnIndex === 2; // Column 2 contains numeric data
+
+        if (currentSortColumn === columnIndex) {
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSortColumn = columnIndex;
+            sortOrder = 'asc';
+        }
+
+        const sortedRows = rows.sort((a, b) => {
+            const aText = a.cells[columnIndex].textContent.trim();
+            const bText = b.cells[columnIndex].textContent.trim();
+
+            let comparison = isNumeric
+                ? parseFloat(aText) - parseFloat(bText)
+                : aText.localeCompare(bText);
+
+            return sortOrder === 'asc' ? comparison : -comparison;
+        });
+
+        sortedRows.forEach(row => tbody.appendChild(row));
+
+        updateSortIndicators();
+    }
+
+    function updateSortIndicators() {
+        const indicators = document.querySelectorAll('thead th span');
+        indicators.forEach((indicator, index) => {
+            indicator.textContent = '';
+            if (index === currentSortColumn) {
+                indicator.textContent = sortOrder === 'asc' ? '▲' : '▼';
+            }
+        });
+    }
+
+    async function loadBrowserShare() {
+        try {
+            const response = await fetch('/api/v1/browser-share');
+            const data = await response.json();
+            document.querySelector("tbody").innerHTML = data.map((record, position) => 
+                `<tr><td>${position+1}</td><td>${record.name}</td><td>${record.share}%</td></tr>`
+            ).join("");
+        } catch (error) {
+            document.querySelector("tbody").innerHTML = `<tr><th scope="row" colspan="3">Error loading data</th></tr>`;
+        }
+    }
+
+    window.onload = loadBrowserShare;
+</script>

@@ -1,0 +1,15 @@
+<script>
+    function fetchTime() {
+        fetch('/api/v1/time')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('time').innerText = data.time;
+            });
+    }
+    window.onload = fetchTime;
+</script>
+<div class="item">
+    <h1>Current Time</h1>
+    <p id="time">Loading...</p>
+    <button onclick="fetchTime()">Reload Time</button>
+</div>

@@ -1,0 +1,23 @@
+<div class="links">
+    Order: 
+    <% if (isRandom) { %>
+        <span>random</span>
+    <% } else { %>
+        <a href="?randomize=true">random</a>
+    <% } %> | 
+    <% if (!isRandom) { %>
+        <span>default</span>
+    <% } else { %>
+        <a href="?">default</a>
+    <% } %>
+</div>
+
+<div class="books-list">
+    <% books.forEach(book => { %>
+        <div class="book" id="book-<%= book.id %>">
+            <span class="title"><%= book.title %></span>
+            <span class="author">by <%= book.author %></span>
+            <span class="genre">(<%= book.genre %>)</span>
+        </div>
+    <% }) %>
+</div>

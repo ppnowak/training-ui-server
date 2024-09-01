@@ -1,0 +1,89 @@
+<% if (!isLoggedIn) { %>
+    <div>
+        Actions: 
+        <button onclick="window.location.href='/shop/login'">Login</button>
+        <button onclick="window.location.href='/shop/register'">Register</button>
+    </div>
+<% } %>
+
+<div class="shop-container">
+    <div class="product-list items-list">
+        <% products.forEach(product => { %>
+            <div class="product item">
+                <img src="images/<%= product.image %>" alt="<%= product.name %>" />
+                <h2><%= product.name %></h2>
+                <p>Price: $<%= product.price %></p>
+                <button onclick="addToCart('<%= product.id %>')">Add to Cart</button>
+            </div>
+        <% }) %>
+    </div>
+
+    <div class="cart-section fixed-cart">
+        <h2>Your Cart</h2>
+        <ul id="cart-items">
+
+        </ul>
+        <button id="clear-cart-button" style="display:none;" onclick="clearCart()">Clear Cart</button>
+        <button onclick="window.location.href='/shop/checkout'">Checkout</button>
+    </div>    
+    
+</div>
+<script>
+    function addToCart(productId) {
+        fetch('/api/v1/shop/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productId })
+        })
+        .then(response => response.json())
+        .then(data => updateCart(data.cart));
+    }
+
+    function createCartItem(cartItems, text) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        cartItems.appendChild(li);
+    }
+
+    function formatPrice(amount) {
+        return `$${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+    }
+
+    function updateCart(cart) {
+        const cartItems = document.getElementById('cart-items');
+        const clearCartButton = document.getElementById('clear-cart-button');
+        cartItems.innerHTML = '';
+        let total = 0;
+
+        if (cart.length > 0) {
+            cart.forEach(item => {
+                const price = item.quantity * item.price;
+                createCartItem(cartItems, `${item.name} (x${item.quantity}, ${formatPrice(price)})`);
+                total += price;
+            });
+            createCartItem(cartItems, `Total: ${formatPrice(total)}`)
+            clearCartButton.style.display = 'block';
+        } else {
+            clearCartButton.style.display = 'none';
+        }
+    }
+
+    function clearCart() {
+        fetch('/api/v1/shop/clear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => updateCart(data.cart));
+    }
+
+    window.onload = () => {
+        fetch('/api/v1/shop/cart')
+            .then(response => response.json())
+            .then(data => updateCart(data.cart));
+    };
+</script>

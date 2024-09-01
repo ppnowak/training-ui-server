@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Index of Pages</title>
+</head>
+<body>
+    <h1>Available Pages</h1>
+    <ul>
+        <% pages.forEach(page => { %>
+            <li><a href="<%= page.url %>"><%= page.name %></a></li>
+        <% }) %>
+    </ul>
+</body>
+</html>

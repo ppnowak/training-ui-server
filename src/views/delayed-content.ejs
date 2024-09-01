@@ -1,0 +1,33 @@
+<script>
+    const addDelayedElement = (id, secondsToAppear, secondsToDisappear = 0) => {
+        return setTimeout(() => {
+            let message = `This div is delayed by ${secondsToAppear}s`;
+            if (secondsToDisappear > 0) {
+                message += `, and disappears after ${secondsToDisappear}s`;
+                setTimeout(() => document.getElementById(id).remove(), secondsToDisappear * 1000);
+            }
+            document.getElementById("main").innerHTML += `<div id="${id}">${message}</div>`;
+        }, secondsToAppear * 1000);
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        addDelayedElement('delayedElement', 5);
+        addDelayedElement('secondElement', 7, 5);
+    });
+</script>
+<div id="main">
+    <div id="mainElement">Initial data</div>
+</div>
+<style>
+    #main > div {
+        background-color: #e0f7fa;
+        border: 1px solid #b2ebf2;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 10px 0;
+        color: #00796b;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+</style>

@@ -1,0 +1,142 @@
+<% if (!isLoggedIn) { %>
+  <p>Please <a href="/shop/login">Login</a> or <a href="/shop/register">Register</a> to checkout.</p>
+<% } else { %>
+  <h1>Checkout</h1>
+  <% if (cart.length === 0) { %>
+      <p>Your cart is empty. <a href="/shop">Go back to shopping</a>.</p>
+  <% } else { %>
+      <div class="hint">
+          <p>Hint! Available coupon codes:</p>
+          <ul>
+              <li><strong>500_OFF</strong> - Applicable for orders with amounts greater than $2000</li>
+              <li><strong>1000_OFF</strong> - Applicable for orders with amounts greater than $5000</li>
+          </ul>
+      </div>
+
+      <table class="cart-summary">
+          <thead>
+              <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% cart.forEach(item => { %>
+                  <tr>
+                      <td>
+                          <img src="/images/<%= item.image %>" alt="<%= item.name %>" style="width:50px;height:auto;margin-right:10px;vertical-align:middle;" />
+                          <span><%= item.name %></span>
+                      </td>
+                      <td>x<%= item.quantity %></td>
+                      <td><%= formatPrice(item.price) %></td>
+                  </tr>
+              <% }) %>
+              <tr>
+                  <td colspan="2" class="discount-code">
+                      <form action="/shop/checkout" method="GET">
+                          <strong>Discount</strong>
+                          <div class="inputs">
+                              <input type="text" id="discountCode" name="discountCode" value="<%= discountCode %>" />
+                              <button type="submit">Save</button>
+                          </div>
+                      </form>
+                  </td>
+                  <td><%= formatPrice(discount) %></td>
+              </tr>
+              <tr>
+                  <td colspan="2"><strong>Total</strong></td>
+                  <td><%= formatPrice(total) %></td>
+              </tr>
+          </tbody>
+      </table>
+
+      <form action="/api/v1/shop/summary" method="POST" class="checkout">
+          <!-- Section 1 - Personal Info -->
+          <h2>Personal Info</h2>
+          <div class="form-row">
+              <div class="form-group">
+                  <label for="firstName">First name</label>
+                  <input type="text" class="form-control" name="firstName" required>
+              </div>
+              <div class="form-group">
+                  <label for="lastName">Last name</label>
+                  <input type="text" class="form-control" name="lastName" required>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" name="username" required>
+              </div>
+              <div class="form-group">
+                  <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                  <input type="email" class="form-control" name="email">
+              </div>
+          </div>
+
+          <!-- Section 2 - Address -->
+          <h2>Address</h2>
+          <div class="form-row">
+              <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" name="address" required>
+              </div>
+              <div class="form-group">
+                  <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                  <input type="text" class="form-control" name="address2">
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group">
+                  <label for="country">Country</label>
+                  <select class="form-control" name="country" required>
+                      <option value="">Choose...</option>
+                      <option>United States</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="state">State</label>
+                  <select class="form-control" name="state" required>
+                      <option value="">Choose...</option>
+                      <option>California</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="zip">Zip</label>
+                  <input type="text" class="form-control" name="zip" required>
+              </div>
+          </div>
+          <div class="form-group">
+              <input type="checkbox" name="same_address" id="same-address"/>
+              <label for="same-address">Shipping address is the same as my billing address</label>
+          </div>
+          <div class="form-group">
+              <input type="checkbox" name="save_info" id="save-info"/>
+              <label for="save-info">Save this information for next time</label>
+          </div>
+
+          <!-- Payment -->
+          <h2>Payment</h2>
+          <div class="form-group">
+              <label for="cc-number">Credit Card Number</label>
+              <input type="text" class="form-control" name="cc_number" required>
+          </div>
+          <div class="form-group">
+              <label for="cc-name">Name on Card</label>
+              <input type="text" class="form-control" name="cc_name" required>
+          </div>
+          <div class="form-row">
+              <div class="form-group">
+                  <label for="cc-expiration">Expiration</label>
+                  <input type="text" class="form-control" name="cc_expiration" required>
+              </div>
+              <div class="form-group">
+                  <label for="cc-cvv">CVV</label>
+                  <input type="text" class="form-control" name="cc_cvv" required>
+              </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Continue to checkout</button>
+      </form>
+  <% } %>
+<% } %>

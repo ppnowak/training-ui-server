@@ -1,0 +1,66 @@
+<h1>Local Storage Management</h1>
+<p id="storageStatus">No data stored.</p>
+
+<div class="form-group">
+    <label for="storageKey">Storage Key:</label>
+    <input type="text" id="storageKey" placeholder="Enter storage key" />
+</div>
+
+<div class="form-group">
+    <label for="storageValue">Storage Value:</label>
+    <input type="text" id="storageValue" placeholder="Enter storage value" />
+</div>
+
+<button onclick="submitForm()">Set Storage</button>
+<button onclick="showStorage()">Show Storage</button>
+<button onclick="clearStorage()">Clear Storage</button>
+
+<ul id="storageList"></ul>
+
+<script>
+    function setStorage(key, value) {
+        localStorage.setItem(key, value);
+        document.getElementById('storageStatus').innerText = `Stored: ${key} = ${value}`;
+    }
+
+    function submitForm() {
+        const key = document.getElementById('storageKey').value;
+        const value = document.getElementById('storageValue').value;
+        if (key && value) {
+            setStorage(key, value);
+            showStorage();
+        } else {
+            alert("Please enter both key and value.");
+        }
+    }
+
+    function showStorage() {
+        const list = document.getElementById('storageList');
+        list.innerHTML = '';
+        if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                const listItem = document.createElement('li');
+                listItem.innerText = `${key}: ${value}`;
+                list.appendChild(listItem);
+            }
+        } else {
+            document.getElementById('storageStatus').innerText = "No data stored.";
+        }
+    }
+
+    function clearStorage() {
+        localStorage.clear();
+        document.getElementById('storageStatus').innerText = "All data cleared!";
+        showStorage();
+    }
+
+    const userAgent = navigator.userAgent;
+    setStorage('userAgent', userAgent);
+
+    const screenResolution = `${screen.width}x${screen.height}`;
+    setStorage('screenResolution', screenResolution);
+
+    window.onload = showStorage;
+</script>

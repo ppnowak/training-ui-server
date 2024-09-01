@@ -1,0 +1,23 @@
+<h1>Order Summary</h1>
+<div id="order-summary">
+    <p><%= shippingInfo.firstName %> <%= shippingInfo.lastName %>, thank you for your order. The summary is included below.</p>
+    <table>
+        <thead>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </thead>
+        <tbody>
+            <% cart.forEach(item => { %>
+                <tr>
+                    <td><%= item.name %></td>
+                    <td>x <%= item.quantity %></td>
+                    <td><%= formatPrice(item.price * item.quantity) %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<p>Total : <%= formatPrice(total) %></p>
+
+<p>Shipping Address: <%= shippingInfo.address %>, <%= shippingInfo.address2 %>, <%= shippingInfo.country %>, <%= shippingInfo.state %>, <%= shippingInfo.zip %></p>

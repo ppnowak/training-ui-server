@@ -1,0 +1,29 @@
+<div id="main-container">
+    <div class="form-group">
+        <input type="file" name="file" id="file">
+        <button onclick="doupload()" name="submit">Upload File</button>
+        <h1>File Data:</h1>
+        <span id="fileName"></span>
+        <br />
+        <textarea id="fileContent" readonly></textarea>
+    </div>
+</div>
+<script>
+    function doupload() {
+        const file = document.getElementById("file").files[0];
+        if (file) {
+            document.getElementById("fileName").innerText = file.name;
+            document.getElementById("fileContent").value = '';
+            var reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+            reader.onload = function (evt) {
+                document.getElementById("fileContent").value += evt.target.result + "\n";
+            };
+        }
+    }
+</script>
+<style>
+    textarea {
+        height: 70vh;
+    }
+</style>
