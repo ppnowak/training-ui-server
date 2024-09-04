@@ -67,6 +67,21 @@
             <label for="radioButton3">Disabled Radio</label>
         </div>
 
+        <!-- Slider -->
+        <div class="form-group">
+            <label for="sliderInput">Slider Input</label>
+            <input type="range" name="sliderInput" id="sliderInput" min="0" max="100" value="50" />
+            <span id="sliderValue">50</span>
+        </div>
+        
+        <script>
+            const slider = document.getElementById('sliderInput');
+            const output = document.getElementById('sliderValue');
+            slider.oninput = function() {
+                output.textContent = this.value;
+            }
+        </script>
+
         <!-- Image -->
         <div class="form-group">
             <label>Sample Image</label>

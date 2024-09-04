@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="/css/drag-and-drop.css">
+
+<h1>Drag & Drop - move the triangle</h1> 
+<div class="grid">
+    <div class="square" data-color="red" data-index="1x1"></div>
+    <div class="square" data-color="blue" data-index="1x2"></div>
+    <div class="square" data-color="green" data-index="1x3"></div>
+    <div class="square" data-color="yellow" data-index="2x1"></div>
+    <div class="square" data-color="orange" data-index="2x2">
+        <div class="triangle" draggable="true" id="triangle"></div>
+    </div>
+    <div class="square" data-color="purple" data-index="2x3"></div>
+    <div class="square" data-color="pink" data-index="3x1"></div>
+    <div class="square" data-color="cyan" data-index="3x2"></div>
+    <div class="square" data-color="grey" data-index="3x3"></div>
+</div>
+<div id="position"></div>
+
+<script>
+    const triangle = document.getElementById('triangle');
+    triangle.addEventListener('dragstart', dragStart);
+    triangle.addEventListener('dragend', dragEnd);
+
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => {
+        square.addEventListener('dragover', dragOver);
+        square.addEventListener('dragenter', dragEnter);
+        square.addEventListener('dragleave', dragLeave);
+        square.addEventListener('drop', dragDrop);
+    });
+
+    function dragStart(e) {
+        e.dataTransfer.setData('text/plain', e.target.id);
+        setTimeout(() => {
+            e.target.classList.add('invisible');
+        }, 0);
+    }
+
+    function dragEnd(e) {
+        e.target.classList.remove('invisible');
+    }
+
+    function dragOver(e) {
+        e.preventDefault();
+    }
+
+    function dragEnter(e) {
+        e.preventDefault();
+        e.target.classList.add('drop-target');
+    }
+
+    function dragLeave(e) {
+        e.target.classList.remove('drop-target');
+    }
+
+    function dragDrop(e) {
+        e.target.classList.remove('drop-target');
+        const draggedElementId = e.dataTransfer.getData('text/plain');
+        const draggedElement = document.getElementById(draggedElementId);
+        const currentParent = draggedElement.parentElement;
+        currentParent.innerHTML = '';
+        e.target.appendChild(draggedElement);
+        document.getElementById('position').innerText = `Triangle new position is: ${e.target.getAttribute('data-index')}`;
+    }
+</script>

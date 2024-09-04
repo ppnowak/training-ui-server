@@ -1,0 +1,40 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    margin: 50px auto;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.square[data-color="red"] .triangle { border-bottom: 60px solid red; }
+.square[data-color="blue"] .triangle { border-bottom: 60px solid blue; }
+.square[data-color="green"] .triangle { border-bottom: 60px solid green; }
+.square[data-color="yellow"] .triangle { border-bottom: 60px solid yellow; }
+.square[data-color="orange"] .triangle { border-bottom: 60px solid orange; }
+.square[data-color="purple"] .triangle { border-bottom: 60px solid purple; }
+.square[data-color="pink"] .triangle { border-bottom: 60px solid pink; }
+.square[data-color="cyan"] .triangle { border-bottom: 60px solid cyan; }
+.square[data-color="grey"] .triangle { border-bottom: 60px solid grey; }
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 60px solid black;
+    position: absolute;
+}
+
+.square.drop-target {
+    border: 2px dashed black;
+}

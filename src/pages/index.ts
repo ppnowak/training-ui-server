@@ -14,6 +14,7 @@ export const routes: Route[] = [
     { path: '/',                name: 'Index',              router: indexPageRouter },
     { path: '/books',           name: 'Books',              router: booksPageRouter },
     { path: '/form-elements',   name: 'HTML Form Elements', router: createLayoutOnlyRouter('html-elements') },
+    { path: '/drag-and-drop',   name: 'Drag and Drop',      router: createLayoutOnlyRouter('drag-and-drop') },
     { path: '/delayed-content', name: 'Disappearing DIVs',  router: createLayoutOnlyRouter('delayed-content') },
     { path: '/upload',          name: 'File Upload',        router: createLayoutOnlyRouter('upload') },
     { path: '/time',            name: 'Current Time',       router: createLayoutOnlyRouter('time') },
