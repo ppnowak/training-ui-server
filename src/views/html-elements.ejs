@@ -4,7 +4,8 @@
         <div class="form-group">
             <label for="textInput">Link Examples</label>
             <a id="link1" href="/books">Default Link</a><br />
-            <a id="link2" href="/books" target="_blank">Popup Link</a>
+            <a id="link2" href="/books" target="_blank">Popup Link</a><br />
+            <a id="link3" href="/api/v1/download/sample">Download Link</a>
         </div>
 
         <!-- Text Input -->
@@ -73,6 +74,11 @@
             <input type="range" name="sliderInput" id="sliderInput" min="0" max="100" value="50" />
             <span id="sliderValue">50</span>
         </div>
+
+        <div class="form-group">
+            <label for="sliderInput">Numeric Input (0-100)</label>
+            <input type="number" id="numberInput" value="50" min="0" max="100" />
+        </div>
         
         <script>
             const slider = document.getElementById('sliderInput');
@@ -93,3 +99,34 @@
     <!-- Hidden Element -->
     <div id="hiddenElement" style="display: none;">Hidden Text</div>
 </form>
+<script>
+    const focusableElements = [
+        ...document.querySelectorAll('input, select, textarea')
+    ].filter(el => !el.disabled);
+    
+    let currentFocusIndex = -1;
+    
+    focusableElements.forEach((el, index) => {
+        el.addEventListener('focus', () => {
+            currentFocusIndex = index;
+        });
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault(); 
+            if (event.shiftKey) {
+                currentFocusIndex--;
+                if (currentFocusIndex < 0) {
+                    currentFocusIndex = focusableElements.length - 1;
+                }
+            } else {
+                currentFocusIndex++;
+                if (currentFocusIndex >= focusableElements.length) {
+                    currentFocusIndex = 0;
+                }
+            }
+            focusableElements[currentFocusIndex].focus();
+        }
+    });
+</script>

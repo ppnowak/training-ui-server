@@ -113,4 +113,12 @@ apiRouter.get('/uptime', (req: Request, res: Response) => {
     res.json({ uptime: uptimeString });
 });
 
+apiRouter.get('/download/sample', (req: Request, res: Response) => {
+    const fileContent = 'This is example file';
+    const fileName = 'sample.txt';
+    res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
+    res.setHeader('Content-type', 'text/plain');
+    res.send(fileContent);
+});
+
 export default apiRouter;
